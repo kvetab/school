@@ -1,5 +1,5 @@
 import math
-# x na 2n lomeno n!
+
 def taylor(x, n):
     s = 0
     for i in range(n):
@@ -11,7 +11,6 @@ def taylor_integral(x, n):
     s = 0
     for i in range(n):
         clen = x ** (2*i + 1) / (math.factorial(i) * (2*i + 1))
-        #print(clen)
         s += clen
     return s
 
@@ -27,4 +26,4 @@ print(soucet)
 soucet = taylor_integral(0.5, 14)
 print(soucet)
 
-# Ma smysl do 12, pak uz jsou hodnoty clenu tak male, ze se hodnota nezmeni (radove 10^-16)
+# Má smysl 12 kroků, pak už jsou hodnoty členů tak malé, že se hodnota nezmění (řádově 10^-16)
