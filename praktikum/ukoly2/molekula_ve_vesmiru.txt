@@ -1,0 +1,10 @@
+Průměr molekuly: 2,75 Å -> 2,75 * 10^-10 m
+Průměr vesmíru: 93 miliard světelných let -> 8,798 * 10^26 m
+
+Binární vyhledávání
+složitost v nejhorším případě O(n.log(n))
+složitost v nejlepším případě O(1)
+průměrně O(n.log(n))
+n = (8.798 * 10^26) / (2.75 * 10^-10) = 3.199 * 10^36
+log2(n) = 121.27
+V nejhorším případě 122 operací
