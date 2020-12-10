@@ -1,0 +1,36 @@
+{
+    "hmm":
+            {
+                "transitions": {
+                   "model1" : {"model1": 0.0, "model2": 1.1, "model3": 0.0, "model4": 0.0, "model5": 0.0,
+                     "model6": 0.0, "model7": 0.0, "bckgrnd":  0.0},
+                   "model2" : {"model1": 0.0, "model2": 0.0, "model3": 1.0, "model4": 0.0, "model5": 0.0,
+                     "model6": 0.0, "model7": 0.0, "bckgrnd":  0.0},
+                   "model3" : {"model1": 0.0, "model2": 0.0, "model3": 0.0, "model4": 0.75, "model5": 0.25,
+                     "model6": 0.0, "model7": 0.0, "bckgrnd":  0.0},
+                   "model4" : {"model1": 0.0, "model2": 0.0, "model3": 0.0, "model4": 0.4, "model5": 0.6,
+                     "model6": 0.0, "model7": 0.0, "bckgrnd":  0.0},
+                   "model5" : {"model1": 0.0, "model2": 0.0, "model3": 0.0, "model4": 0.0, "model5": 0.0,
+                     "model6": 1.0, "model7": 0.0, "bckgrnd":  0.0},
+                   "model6" : {"model1": 0.0, "model2": 0.0, "model3": 0.0, "model4": 0.0, "model5": 0.0,
+                     "model6": 0.0, "model7": 1.0, "bckgrnd":  0.0},
+                   "model7" : {"model1": 0.0, "model2": 0.0, "model3": 0.0, "model4": 0.0, "model5": 0.0,
+                     "model6": 0.0, "model7": 0.0, "bckgrnd":  1.0},
+                   "bckgrnd": {"model1": 0.0, "model2": 0.0, "model3": 0.0, "model4": 0.0, "model5": 0.0,
+                     "model6": 0.0, "model7": 0.0, "bckgrnd":  1.0}
+                },
+                "emissions": {
+                  "model1" : {"A": 0.56, "G": 0.11, "C":  0.11, "T":  0.22},
+                  "model2" : {"A": 0.11, "G": 0.22, "C":  0.56, "T":  0.11},
+                  "model3" : {"A": 0.56, "G": 0.11, "C":  0.22, "T":  0.11},
+                  "model4" : {"A": 0.22, "G": 0.22, "C":  0.33, "T":  0.22},
+                  "model5" : {"A": 0.67, "G": 0.11, "C":  0.11, "T":  0.11},
+                  "model6" : {"A": 0.11, "G": 0.22, "C":  0.11, "T":  0.56},
+                  "model7" : {"A": 0.11, "G": 0.22, "C":  0.56, "T":  0.11},
+                  "bckgrnd": {"A": 0.25, "G": 0.25, "C":  0.25, "T":  0.25}
+                },
+                "pi": {"model1": 1.0, "model2": 0.0, "model3": 0.0, "model4": 0.0, "model5": 0.0,
+                     "model6": 0.0, "model7": 0.0, "bckgrnd":  0.0}
+            }
+
+}
