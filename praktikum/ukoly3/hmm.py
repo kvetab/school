@@ -1,63 +1,88 @@
 import json
 import math
-import sys
 
 
 p = 5
 opts = [[1, 2, 3, 5, 6, 7], [1, 2, 3, 4, 5, 6, 7], [1, 2, 3, 4, 4, 5, 6, 7], [1, 2, 3, 4, 4, 4, 5, 6, 7]]
 
 
+def get_length_ungapped(sequence):
+    return sum(1 for pos in sequence if pos != "-")
+
+
+def log_odds(sequence, probability):
+    length = get_length_ungapped(sequence)
+    bckgrnd = 0.25**length
+    score = math.log(probability / bckgrnd)
+    return score
+
+
 class HmmModel:
     def __init__(self, filename):
         """
-        Load model from json representation. Model is (transitions, emissions, pi), where pi = initial distribution.
-        :param filaname: Name of the model used to find file to load from
+        Load model from json representation.
         """
-        self.model = json.loads(open(filename).read())["hmm"]
-        self.emissions = self.model["emissions"]
-        self.states = self.emissions.keys()  # get the list of states
-        self.N = len(self.states)  # number of states of the model
-        self.symbols = next(iter(self.emissions.values())).keys()
-        #self.symbols = self.emissions[self.emissions.keys()[0]].values()  # get the list of symbols, assume that all symbols are listed in the emission matrix
-        self.M = len(self.symbols)  # number of states of the model
+        model = json.load(open(filename))["hmm"]
+        self.emissions = model["emissions"]
+        self.transitions = model["transitions"]
 
-        # use log versions of probabilities
-        self.log_transitions = {}
-        self.log_emissions = {}
-        self.log_pi = {}
-        self.set_log_model()
+    def score_sequence(self, sequence):
+        sequence = sequence.strip()
+        option = opts[get_length_ungapped(sequence) - 6]
+        emission_probs = 1
+        transition_probs = 1
+        for i, state in enumerate(option):
+            if sequence[i] != "-":
+                emission_probs *= self.emissions["model" + str(state)][sequence[i]]
+            if i > 0:
+                transition_probs *= self.transitions["model" + str(last_state)]["model" + str(state)]
+            last_state = state
+        return emission_probs * transition_probs
 
-    def set_log_model(self):
-        for state in self.states:
-            self.log_emissions[state] = {}
-            for symbol in self.emissions[state].keys():
-                self.emissions[state][symbol] += 1/p
-                self.log_emissions[state][symbol] = math.log(self.emissions[state][symbol])
 
-    def score_background(self, seq):
-        return math.log(0.25) * 7.5
-        # sequences are 6 to 9 long -> 7.5 is average
+def score_alignment_sequences():
+    # Task no. 1
+    # (Matrix already contains pseudocounts)
+    model = HmmModel("model.json")
+    with open("alignment.txt", "r") as f:
+        alignment = f.readlines()
+    for seq in alignment:
+        prob = model.score_sequence(seq)
+        logodds = log_odds(seq, prob)
+        print(f"Sequence: {seq.strip()}; score: {logodds}")
 
-    def score_motif(self, seq):
-        max_score = -1000
-        for opt in opts:
-            score = 0
-            for i, sym in enumerate(opt):
-                score += self.log_emissions['model' + str(sym)][seq[i]]
-            if score > max_score:
-                max_score = score
-        return max_score
 
-    def find_motif(self, seq):
-        results = []
-        for pos in range(len(seq) - 9):
-            bckgrnd = self.score_background(seq[pos:pos+9])
-            motif = self.score_motif(seq[pos:pos+9])
-            res = "b" if bckgrnd > motif else "m"
-            results.append(res)
-        return "".join(results)
+def search_sequence(sequence, model):
+    # Task no. 2
+    probs = {}
+    pos_probs = {}
+    for opt in opts:
+        window = len(opt)
+        probs[window] = []
+        for pos in range(len(sequence) - window + 1):
+            subseq = sequence[pos:pos + window]
+            score = model.score_sequence(subseq)
+            probs[window].append(score)
+            pos_probs[pos] = pos_probs.get(pos, []) + [(window, score)]
 
+    maxprob = 0
+    maxpos = -1
+    for pos, probs in pos_probs.items():
+        probs.sort(key=lambda x: x[1], reverse=True)
+        if pos_probs[pos][0][1] > maxprob:
+            maxpos = pos
+            maxprob = pos_probs[pos][0][1]
+    window = pos_probs[maxpos][0][0]
+    result_string = "b" * maxpos + "m" * window + "b" * (len(sequence) - maxpos - window)
+    return result_string
+
+
+sequence = "AGATCCATTGACCGTTACACATCAGATTGATAGATTGATTTTGATCGACAAAGTG"
+
+score_alignment_sequences()
+print()
 
 model = HmmModel("model.json")
-res = model.find_motif("AGATCCATTGACCGTTACACATCAGATTGATAGATTGATTTTGATCGACAAAGTG")
-print(res)
+print(sequence)
+res_string = search_sequence(sequence, model)
+print(res_string)

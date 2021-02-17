@@ -2,11 +2,11 @@
     "hmm":
             {
                 "transitions": {
-                   "model1" : {"model1": 0.0, "model2": 1.1, "model3": 0.0, "model4": 0.0, "model5": 0.0,
+                   "model1" : {"model1": 0.0, "model2": 1.0, "model3": 0.0, "model4": 0.0, "model5": 0.0,
                      "model6": 0.0, "model7": 0.0, "bckgrnd":  0.0},
                    "model2" : {"model1": 0.0, "model2": 0.0, "model3": 1.0, "model4": 0.0, "model5": 0.0,
                      "model6": 0.0, "model7": 0.0, "bckgrnd":  0.0},
-                   "model3" : {"model1": 0.0, "model2": 0.0, "model3": 0.0, "model4": 0.75, "model5": 0.25,
+                   "model3" : {"model1": 0.0, "model2": 0.0, "model3": 0.0, "model4": 0.6, "model5": 0.4,
                      "model6": 0.0, "model7": 0.0, "bckgrnd":  0.0},
                    "model4" : {"model1": 0.0, "model2": 0.0, "model3": 0.0, "model4": 0.4, "model5": 0.6,
                      "model6": 0.0, "model7": 0.0, "bckgrnd":  0.0},
